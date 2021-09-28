@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lib cos</string>
+    <string name="first_name">First name</string>
+    <string name="second_name">Second name</string>
+    <string name="age">age</string>
+    <string name="resume_link">resume link</string>
+    <string name="organization">Organization</string>
+</resources>
