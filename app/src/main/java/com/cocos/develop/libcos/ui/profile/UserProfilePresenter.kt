@@ -2,6 +2,8 @@ package com.cocos.develop.libcos.ui.profile
 
 import com.cocos.develop.libcos.domain.UserProfile
 import com.cocos.develop.libcos.domain.UserRepo
+import com.cocos.develop.libcos.utils.ErrorCode
+import com.cocos.develop.libcos.utils.ViewState
 
 /**
  * homework com.cocos.develop.libcos.ui
@@ -10,14 +12,14 @@ import com.cocos.develop.libcos.domain.UserRepo
  * 28.09.2021
  */
 
-class UserProfilePresenter(private val userRepo: UserRepo): Contract.Presenter {
+class UserProfilePresenter(private val userRepo: UserRepo): ProfileContract.Presenter {
 
-    private var view: Contract.View?= null
+    private var view: ProfileContract.View?= null
     private var userProfile: UserProfile? = null
 
-    override fun onAttach(view:Contract.View) {
+    override fun onAttach(view:ProfileContract.View) {
         this.view = view
-        view.setState(Contract.ViewState.IDLE)
+        view.setState(ViewState.IDLE)
         userProfile?.let {
             view.setUser(it)
         }
@@ -28,11 +30,11 @@ class UserProfilePresenter(private val userRepo: UserRepo): Contract.Presenter {
     }
 
     override fun onSave(user: UserProfile) {
-       view?.setState(Contract.ViewState.SUCCESS)
+       view?.setState(ViewState.SUCCESS)
     }
 
     override fun onChangeOrganization(organization: String) {
-        view?.setOrganizationError(0)
-        view?.setState(Contract.ViewState.LOADING)
+        view?.setOrganizationError(ErrorCode.SERVICE_UNAVAILABLE)
+        view?.setState(ViewState.LOADING)
     }
 }

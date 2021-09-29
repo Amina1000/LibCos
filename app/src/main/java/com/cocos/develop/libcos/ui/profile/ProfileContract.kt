@@ -1,6 +1,8 @@
 package com.cocos.develop.libcos.ui.profile
 
 import com.cocos.develop.libcos.domain.UserProfile
+import com.cocos.develop.libcos.utils.ErrorCode
+import com.cocos.develop.libcos.utils.ViewState
 
 /**
  * homework com.cocos.develop.libcos.ui
@@ -8,16 +10,12 @@ import com.cocos.develop.libcos.domain.UserProfile
  * @author Amina
  * 28.09.2021
  */
-class Contract {
-
-    enum class ViewState{
-        IDLE, LOADING, SUCCESS, ERROR
-    }
+class ProfileContract {
 
     interface View{
         fun setState(state: ViewState)
         fun setUser(user:UserProfile)
-        fun setOrganizationError(errorCode:Int)
+        fun setOrganizationError(errorCode:ErrorCode)
     }
 
     interface Presenter{
