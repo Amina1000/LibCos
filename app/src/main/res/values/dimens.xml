@@ -3,4 +3,5 @@
     <dimen name="padding_layout">16dp</dimen>
     <dimen name="margin_s">20dp</dimen>
     <dimen name="margin_xs">10dp</dimen>
+    <dimen name="margin_xxs">8dp</dimen>
 </resources>

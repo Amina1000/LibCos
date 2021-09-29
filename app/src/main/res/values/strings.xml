@@ -5,4 +5,9 @@
     <string name="age">age</string>
     <string name="resume_link">resume link</string>
     <string name="organization">Organization</string>
+    <string name="email">email</string>
+    <string name="phone">phone</string>
+    <string name="mask_phone">+7(###)###-##-##</string>
+    <string name="hint_phone">1234567890</string>
+    <string name="example_phone">1234567890</string>
 </resources>
