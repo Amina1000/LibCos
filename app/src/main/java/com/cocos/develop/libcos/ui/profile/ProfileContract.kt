@@ -16,12 +16,13 @@ class ProfileContract {
         fun setState(state: ViewState)
         fun setUser(user:UserProfile)
         fun setOrganizationError(errorCode:ErrorCode)
+        fun setEmailError(errorCode:ErrorCode)
     }
 
     interface Presenter{
         fun onAttach(view:View)
         fun onDetach()
-
+        fun onChangeEmail(email: String)
         fun onSave(user:UserProfile)
         fun onChangeOrganization(organization: String)
     }

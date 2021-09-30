@@ -7,7 +7,8 @@ package com.cocos.develop.libcos.domain
  * 29.09.2021
  */
 interface UserRepo {
-    fun saveUser(user:UserRepo)
+    fun saveUser(user:UserProfile)
     fun getUsers(): List<UserProfile>
     fun getUser(email: String):UserProfile?
+    fun getOrganization(): String
 }

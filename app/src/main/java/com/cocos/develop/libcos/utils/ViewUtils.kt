@@ -8,10 +8,13 @@ import android.widget.EditText
  * @author Amina
  * 29.09.2021
  */
-fun EditText.parsToInt():Int{
-    return this.text?.toString()?.toInt()?:0
+const val DEFAULT_AGE = 0
+
+fun EditText.parsToInt(): Int {
+    return if (this.text.toString() == "") DEFAULT_AGE
+    else this.text.toString().toInt()
 }
 
-fun EditText.parsToString():String{
+fun EditText.parsToString(): String {
     return this.text.toString()
 }

@@ -23,4 +23,7 @@
     <string name="forgotten_password">forgotten password</string>
     <string name="password_confirm">password confirm</string>
     <string name="save_changes">save changes</string>
+    <string name="organization_example">ООО ГикБреинс</string>
+    <string name="fake_user_email">amina1000@test.ru</string>
+    <string name="fake_user_password">654321</string>
 </resources>

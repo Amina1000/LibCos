@@ -12,6 +12,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.cocos.develop.libcos.R
 import com.cocos.develop.libcos.databinding.FragmentLoginBinding
 import com.cocos.develop.libcos.domain.LoginEntity
+import com.cocos.develop.libcos.impl.LoginRoomRepoImpl
 import com.cocos.develop.libcos.utils.ErrorCode
 import com.cocos.develop.libcos.utils.ViewState
 import com.cocos.develop.libcos.utils.getErrorByCode
@@ -22,7 +23,7 @@ import java.util.*
 class LoginFragment : Fragment(R.layout.fragment_login), LoginContract.View {
 
     private val binding: FragmentLoginBinding by viewBinding(FragmentLoginBinding::bind)
-    private var presenter: LoginContract.Presenter = LoginPresenter()
+    private var presenter: LoginContract.Presenter = LoginPresenter(LoginRoomRepoImpl())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +44,12 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginContract.View {
         binding.username.addTextChangedListener {
             presenter.onChangeEmail(it.toString())
         }
+        initButtons()
+    }
+
+    private fun initButtons() {
         binding.singInButton.setOnClickListener {
-            presenter.onSingInClick(gatherLogin())
+            presenter.onSingInClick(binding.username.parsToString(), binding.password.parsToString())
         }
         binding.register.setOnClickListener {
             presenter.onRegisterClick(gatherLogin())
@@ -53,6 +58,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginContract.View {
             presenter.onForgetPassClick(gatherLogin())
         }
     }
+
     private fun gatherLogin(): LoginEntity {
         return LoginEntity(
             UUID.randomUUID().toString(),
@@ -78,7 +84,6 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginContract.View {
             }
             ViewState.SUCCESS -> {
                 binding.loginBlank.isVisible = true
-                Snackbar.make(binding.root, getString(R.string.welcome), Snackbar.LENGTH_SHORT).show()
             }
         }
 
@@ -94,6 +99,10 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginContract.View {
 
     override fun openPasswordScreen(login:LoginEntity) {
         navigateTo(R.id.password_fragment)
+    }
+
+    override fun checkLogin(result: String) {
+        Snackbar.make(binding.root, result, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun navigateTo(target: Int) =

@@ -1,9 +1,13 @@
 package com.cocos.develop.libcos.ui.login
 
 import com.cocos.develop.libcos.domain.LoginEntity
+import com.cocos.develop.libcos.domain.LoginRepo
+import com.cocos.develop.libcos.domain.ResultState
+import com.cocos.develop.libcos.domain.UserRepo
 import com.cocos.develop.libcos.ui.profile.ProfileContract
 import com.cocos.develop.libcos.utils.ErrorCode
 import com.cocos.develop.libcos.utils.ViewState
+import com.cocos.develop.libcos.utils.checkCurrentEmail
 
 /**
  * homework com.cocos.develop.libcos.ui.login
@@ -11,9 +15,10 @@ import com.cocos.develop.libcos.utils.ViewState
  * @author Amina
  * 29.09.2021
  */
-class LoginPresenter:LoginContract.Presenter {
+class LoginPresenter(private val loginRepo: LoginRepo) : LoginContract.Presenter {
 
-    private var view: LoginContract.View?= null
+    private var view: LoginContract.View? = null
+    private var loginEntity: LoginEntity? = null
 
     override fun onAttach(view: LoginContract.View) {
         this.view = view
@@ -25,13 +30,29 @@ class LoginPresenter:LoginContract.Presenter {
     }
 
     override fun onChangeEmail(email: String) {
-        view?.setEmailError(ErrorCode.NOT_FOUND)
-        view?.setState(ViewState.LOADING)
+        if (!checkCurrentEmail(email)) {
+            view?.setEmailError(ErrorCode.TYPE_ERROR)
+            view?.setState(ViewState.ERROR)
+        }
     }
 
-    override fun onSingInClick(login: LoginEntity) {
-        view?.setState(ViewState.SUCCESS)
+    override fun onSingInClick(username: String, password: String) {
+        val result = loginRepo.checkLogin(username, password)
+        view?.setState(ViewState.LOADING)
+
+        if (result is ResultState.Success) {
+            loginEntity = result.data
+            if (loginEntity!= null){
+                view?.setState(ViewState.SUCCESS)
+                view?.openProfileScreen(loginEntity!!)
+            }else
+                view?.setState(ViewState.ERROR)
+        } else {
+            view?.setState(ViewState.ERROR)
+        }
+        view?.checkLogin(result.toString())
     }
+
 
     override fun onRegisterClick(login: LoginEntity) {
         view?.openProfileScreen(login)

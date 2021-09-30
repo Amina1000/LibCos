@@ -4,6 +4,7 @@ import com.cocos.develop.libcos.domain.UserProfile
 import com.cocos.develop.libcos.domain.UserRepo
 import com.cocos.develop.libcos.utils.ErrorCode
 import com.cocos.develop.libcos.utils.ViewState
+import com.cocos.develop.libcos.utils.checkCurrentEmail
 
 /**
  * homework com.cocos.develop.libcos.ui
@@ -29,12 +30,23 @@ class UserProfilePresenter(private val userRepo: UserRepo): ProfileContract.Pres
         view = null
     }
 
+    override fun onChangeEmail(email: String) {
+        if (!checkCurrentEmail(email)){
+            view?.setEmailError(ErrorCode.TYPE_ERROR)
+            view?.setState(ViewState.ERROR)
+        }
+    }
+
     override fun onSave(user: UserProfile) {
-       view?.setState(ViewState.SUCCESS)
+        view?.setState(ViewState.LOADING)
+        userRepo.saveUser(user)
+        view?.setState(ViewState.SUCCESS)
     }
 
     override fun onChangeOrganization(organization: String) {
-        view?.setOrganizationError(ErrorCode.SERVICE_UNAVAILABLE)
-        view?.setState(ViewState.LOADING)
+        if (userRepo.getOrganization()!=organization){
+            view?.setOrganizationError(ErrorCode.NOT_FOUND)
+            view?.setState(ViewState.ERROR)
+        }
     }
 }

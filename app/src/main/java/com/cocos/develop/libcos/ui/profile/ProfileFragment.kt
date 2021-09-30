@@ -99,6 +99,10 @@ class ProfileFragment : Fragment() , ProfileContract.View {
         binding.organizationEditText.error = getErrorByCode(errorCode, getString(R.string.organization))
     }
 
+    override fun setEmailError(errorCode: ErrorCode) {
+        binding.emailEditText.error = getErrorByCode(errorCode, getString(R.string.email))
+    }
+
     override fun onDestroy() {
         presenter.onDetach()
         super.onDestroy()
