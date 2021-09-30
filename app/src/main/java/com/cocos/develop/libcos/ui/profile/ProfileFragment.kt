@@ -45,6 +45,9 @@ class ProfileFragment : Fragment() , ProfileContract.View {
             presenter.onChangeOrganization(it.toString())
         }
 
+        binding.emailEditText.addTextChangedListener {
+            presenter.onChangeEmail(it.toString())
+        }
     }
 
     private fun gatherUser(): UserProfile {
