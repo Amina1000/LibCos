@@ -5,4 +5,25 @@
     <string name="age">age</string>
     <string name="resume_link">resume link</string>
     <string name="organization">Organization</string>
+    <string name="email">email</string>
+    <string name="phone">phone</string>
+    <string name="mask_phone">+7(###)###-##-##</string>
+    <string name="hint_phone">1234567890</string>
+    <string name="example_phone">1234567890</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="password">password</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="error">error</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="forgotten_password">forgotten password</string>
+    <string name="password_confirm">password confirm</string>
+    <string name="save_changes">save changes</string>
+    <string name="organization_example">ООО ГикБреинс</string>
+    <string name="fake_user_email">amina1000@test.ru</string>
+    <string name="fake_user_password">654321</string>
 </resources>
