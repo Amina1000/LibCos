@@ -6,4 +6,5 @@
     <dimen name="margin_xxs">8dp</dimen>
     <dimen name="margin_xxl">64dp</dimen>
     <dimen name="text_size_xl">16sp</dimen>
+    <dimen name="corner_radius_l">20dp</dimen>
 </resources>

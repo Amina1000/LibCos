@@ -53,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_xxl"
+        app:cornerRadius="@dimen/corner_radius_l"
         android:gravity="center"
         android:text="@string/save_changes"
         app:layout_constraintBottom_toBottomOf="parent"
