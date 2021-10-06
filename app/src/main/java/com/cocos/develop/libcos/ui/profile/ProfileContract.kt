@@ -1,8 +1,12 @@
 package com.cocos.develop.libcos.ui.profile
 
 import com.cocos.develop.libcos.domain.UserProfile
+import com.cocos.develop.libcos.utils.AppState
 import com.cocos.develop.libcos.utils.ErrorCode
-import com.cocos.develop.libcos.utils.ViewState
+import moxy.MvpPresenter
+import moxy.MvpView
+import moxy.viewstate.strategy.AddToEndSingleStrategy
+import moxy.viewstate.strategy.StateStrategyType
 
 /**
  * homework com.cocos.develop.libcos.ui
@@ -12,19 +16,19 @@ import com.cocos.develop.libcos.utils.ViewState
  */
 class ProfileContract {
 
-    interface View{
-        fun setState(state: ViewState)
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    interface View: MvpView {
+        fun setState(state: AppState)
         fun setUser(user:UserProfile)
         fun setOrganizationError(errorCode:ErrorCode)
         fun setEmailError(errorCode:ErrorCode)
+
     }
 
-    interface Presenter{
-        fun onAttach(view:View)
-        fun onDetach()
-        fun onChangeEmail(email: String)
-        fun onSave(user:UserProfile)
-        fun onChangeOrganization(organization: String)
+    abstract class Presenter: MvpPresenter<View>(){
+        abstract fun onChangeEmail(email: String)
+        abstract fun onSave(user:UserProfile)
+        abstract fun onChangeOrganization(organization: String)
     }
 
 }

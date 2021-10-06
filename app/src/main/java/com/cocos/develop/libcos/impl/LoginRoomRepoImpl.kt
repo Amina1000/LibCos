@@ -11,7 +11,7 @@ import com.cocos.develop.libcos.domain.ResultState
  * @author Amina
  * 30.09.2021
  */
-class LoginRoomRepoImpl(private val dataSource:LoginDataSource = LoginDataSource()):LoginRepo {
+class LoginRoomRepoImpl(private val dataSource: LoginDataSource = LoginDataSource()) : LoginRepo {
 
     override fun checkLogin(username: String, password: String): ResultState<LoginEntity> {
         return dataSource.login(username, password)

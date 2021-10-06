@@ -3,10 +3,8 @@ package com.cocos.develop.libcos.ui.login
 import com.cocos.develop.libcos.domain.LoginEntity
 import com.cocos.develop.libcos.domain.LoginRepo
 import com.cocos.develop.libcos.domain.ResultState
-import com.cocos.develop.libcos.domain.UserRepo
-import com.cocos.develop.libcos.ui.profile.ProfileContract
 import com.cocos.develop.libcos.utils.ErrorCode
-import com.cocos.develop.libcos.utils.ViewState
+import com.cocos.develop.libcos.utils.AppState
 import com.cocos.develop.libcos.utils.checkCurrentEmail
 
 /**
@@ -15,51 +13,41 @@ import com.cocos.develop.libcos.utils.checkCurrentEmail
  * @author Amina
  * 29.09.2021
  */
-class LoginPresenter(private val loginRepo: LoginRepo) : LoginContract.Presenter {
+class LoginPresenter(private val loginRepo: LoginRepo) : LoginContract.Presenter() {
 
-    private var view: LoginContract.View? = null
-    private var loginEntity: LoginEntity? = null
-
-    override fun onAttach(view: LoginContract.View) {
-        this.view = view
-        view.setState(ViewState.IDLE)
-    }
-
-    override fun onDetach() {
-        view = null
+     override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        viewState.setState(AppState.IDLE)
     }
 
     override fun onChangeEmail(email: String) {
         if (!checkCurrentEmail(email)) {
-            view?.setEmailError(ErrorCode.TYPE_ERROR)
-            view?.setState(ViewState.ERROR)
+            viewState.setEmailError(ErrorCode.TYPE_ERROR)
+            viewState.setState(AppState.ERROR)
         }
     }
 
     override fun onSingInClick(username: String, password: String) {
         val result = loginRepo.checkLogin(username, password)
-        view?.setState(ViewState.LOADING)
+        viewState.setState(AppState.LOADING)
 
         if (result is ResultState.Success) {
-            loginEntity = result.data
-            if (loginEntity!= null){
-                view?.setState(ViewState.SUCCESS)
-                view?.openProfileScreen(loginEntity!!)
-            }else
-                view?.setState(ViewState.ERROR)
+            result.data?.let { loginEntity ->
+                viewState.setState(AppState.SUCCESS)
+                viewState.openProfileScreen(loginEntity) } ?: viewState.setState(AppState.ERROR)
         } else {
-            view?.setState(ViewState.ERROR)
+            viewState.setState(AppState.ERROR)
         }
-        view?.checkLogin(result.toString())
+        viewState.checkLogin(result.toString())
     }
 
 
     override fun onRegisterClick(login: LoginEntity) {
-        view?.openProfileScreen(login)
+        viewState.openProfileScreen(login)
     }
 
     override fun onForgetPassClick(login: LoginEntity) {
-        view?.openPasswordScreen(login)
+        viewState.openPasswordScreen(login)
     }
 
 }

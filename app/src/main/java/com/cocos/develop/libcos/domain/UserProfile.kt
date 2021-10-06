@@ -16,5 +16,5 @@ data class UserProfile(
     val picUrl: String,
     val resume:String,
     val phone: String,
-    val id:String
+    var id:String? =null
     )
