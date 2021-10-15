@@ -1,6 +1,8 @@
 package com.cocos.develop.libcos.utils
 
+import android.content.Context
 import com.cocos.develop.libcos.domain.LoginEntity
+import com.cocos.develop.libcos.ui.App
 import java.util.*
 
 /**
@@ -9,10 +11,12 @@ import java.util.*
  * @author Amina
  * 29.09.2021
  */
-val fakeUser = LoginEntity(UUID.randomUUID().toString(),
-    "amina1000@test.ru","654321")
+val fakeUser = LoginEntity(
+    UUID.randomUUID().toString(),
+    "amina1000@test.ru", "654321"
+)
 
-fun getErrorByCode(errorCode: ErrorCode, field:String): String {
+fun getErrorByCode(errorCode: ErrorCode, field: String): String {
     return when (errorCode) {
         ErrorCode.NOT_FOUND -> "$field have not founded"
         ErrorCode.UNAUTHORIZED -> "$field have not unauthorized"
@@ -22,6 +26,12 @@ fun getErrorByCode(errorCode: ErrorCode, field:String): String {
     }
 }
 
-fun checkCurrentEmail(email: String):Boolean{
+fun checkCurrentEmail(email: String): Boolean {
     return email.contains("@") && email.contains(".")
 }
+
+val Context.app: App
+    get() {
+        return  applicationContext as App
+    }
+

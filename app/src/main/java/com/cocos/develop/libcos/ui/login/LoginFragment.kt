@@ -6,24 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.cocos.develop.libcos.R
 import com.cocos.develop.libcos.databinding.FragmentLoginBinding
 import com.cocos.develop.libcos.domain.LoginEntity
-import com.cocos.develop.libcos.impl.LoginRoomRepoImpl
-import com.cocos.develop.libcos.utils.ErrorCode
-import com.cocos.develop.libcos.utils.ViewState
-import com.cocos.develop.libcos.utils.getErrorByCode
-import com.cocos.develop.libcos.utils.parsToString
+import com.cocos.develop.libcos.utils.*
 import com.google.android.material.snackbar.Snackbar
+import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
 import java.util.*
 
-class LoginFragment : Fragment(R.layout.fragment_login), LoginContract.View {
+class LoginFragment : MvpAppCompatFragment(), LoginContract.View {
 
     private val binding: FragmentLoginBinding by viewBinding(FragmentLoginBinding::bind)
-    private var presenter: LoginContract.Presenter = LoginPresenter(LoginRoomRepoImpl())
+    private val presenter by moxyPresenter { LoginPresenter(requireActivity().app.loginRepo)}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +32,6 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.onAttach(this)
         initView()
     }
 
@@ -66,23 +62,23 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginContract.View {
             binding.password.parsToString()
         )
     }
-    override fun setState(state: ViewState) {
+    override fun setState(state: AppState) {
         binding.loginBlank.isVisible = false
         binding.loading.isVisible = false
 
         when (state) {
-            ViewState.IDLE ->
+            AppState.IDLE ->
                 binding.loginBlank.isVisible = true
-            ViewState.LOADING -> {
+            AppState.LOADING -> {
                 binding.loginBlank.isVisible = true
                 binding.loading.isVisible = true
             }
-            ViewState.ERROR -> {
+            AppState.ERROR -> {
                 binding.loginBlank.isVisible = true
                 binding.loading.isVisible = true
                 Snackbar.make(binding.root, getString(R.string.error), Snackbar.LENGTH_SHORT).show()
             }
-            ViewState.SUCCESS -> {
+            AppState.SUCCESS -> {
                 binding.loginBlank.isVisible = true
             }
         }

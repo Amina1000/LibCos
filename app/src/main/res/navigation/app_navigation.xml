@@ -9,10 +9,10 @@
         android:name="com.cocos.develop.libcos.ui.login.LoginFragment"
         android:label="LoginFragment" >
         <action
-            android:id="@+id/action_login_fragment_to_profile_fragment2"
+            android:id="@+id/action_login_fragment_to_profile_fragment"
             app:destination="@id/profile_fragment" />
         <action
-            android:id="@+id/action_login_fragment_to_password_fragment2"
+            android:id="@+id/action_login_fragment_to_password_fragment"
             app:destination="@id/password_fragment" />
     </fragment>
     <fragment

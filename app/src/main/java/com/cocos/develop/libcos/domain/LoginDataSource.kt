@@ -11,13 +11,13 @@ import java.io.IOException
 class LoginDataSource {
 
     fun login(username: String, password: String): ResultState<LoginEntity> {
-        try {
-            if (fakeUser.email == username && fakeUser.password == password)
-                return ResultState.Success(fakeUser)
-            else
-                return ResultState.Error(IOException(getErrorByCode(ErrorCode.NOT_FOUND, "email")))
+        return try {
+            if (fakeUser.email == username && fakeUser.password == password){
+                ResultState.Success(fakeUser)}
+            else{
+                ResultState.Error(IOException(getErrorByCode(ErrorCode.NOT_FOUND, "email")))}
         } catch (e: Throwable) {
-            return ResultState.Error(IOException("Error logging in", e))
+            ResultState.Error(IOException("Error logging in", e))
         }
     }
 

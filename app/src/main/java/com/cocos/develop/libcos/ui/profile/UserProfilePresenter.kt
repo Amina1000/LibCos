@@ -3,7 +3,7 @@ package com.cocos.develop.libcos.ui.profile
 import com.cocos.develop.libcos.domain.UserProfile
 import com.cocos.develop.libcos.domain.UserRepo
 import com.cocos.develop.libcos.utils.ErrorCode
-import com.cocos.develop.libcos.utils.ViewState
+import com.cocos.develop.libcos.utils.AppState
 import com.cocos.develop.libcos.utils.checkCurrentEmail
 
 /**
@@ -13,40 +13,33 @@ import com.cocos.develop.libcos.utils.checkCurrentEmail
  * 28.09.2021
  */
 
-class UserProfilePresenter(private val userRepo: UserRepo): ProfileContract.Presenter {
+class UserProfilePresenter(private val userRepo: UserRepo): ProfileContract.Presenter() {
 
     private var view: ProfileContract.View?= null
-    private var userProfile: UserProfile? = null
 
-    override fun onAttach(view:ProfileContract.View) {
-        this.view = view
-        view.setState(ViewState.IDLE)
-        userProfile?.let {
-            view.setUser(it)
-        }
-    }
-
-    override fun onDetach() {
-        view = null
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        viewState.setState(AppState.IDLE)
     }
 
     override fun onChangeEmail(email: String) {
         if (!checkCurrentEmail(email)){
             view?.setEmailError(ErrorCode.TYPE_ERROR)
-            view?.setState(ViewState.ERROR)
+            view?.setState(AppState.ERROR)
         }
     }
 
     override fun onSave(user: UserProfile) {
-        view?.setState(ViewState.LOADING)
+        view?.setState(AppState.LOADING)
         userRepo.saveUser(user)
-        view?.setState(ViewState.SUCCESS)
+        view?.setState(AppState.SUCCESS)
     }
 
     override fun onChangeOrganization(organization: String) {
         if (userRepo.getOrganization()!=organization){
             view?.setOrganizationError(ErrorCode.NOT_FOUND)
-            view?.setState(ViewState.ERROR)
+            view?.setState(AppState.ERROR)
         }
     }
+
 }

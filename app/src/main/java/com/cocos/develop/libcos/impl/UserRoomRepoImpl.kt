@@ -2,9 +2,7 @@ package com.cocos.develop.libcos.impl
 
 import com.cocos.develop.libcos.domain.UserProfile
 import com.cocos.develop.libcos.domain.UserRepo
-import android.R
-
-
+import java.util.*
 
 
 /**
@@ -15,7 +13,7 @@ import android.R
  */
 class UserRoomRepoImpl: UserRepo {
     override fun saveUser(user: UserProfile) {
-        //TODO("Not yet implemented")
+        user.id = UUID.randomUUID().toString()
     }
 
     override fun getUsers(): List<UserProfile> {
